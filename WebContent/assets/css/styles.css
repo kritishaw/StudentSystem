@@ -1,0 +1,113 @@
+body 
+{ margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  height:100%;
+  width:100%;
+}
+
+#wrapper{
+	height:100%;
+	width:100%;
+}
+
+#header {
+  height: 10%;
+}
+#left { 
+	float:left; 
+  	width: 150px;
+	background: #0021a5;
+	padding: 15px;
+}
+#center {
+  height:90%
+}
+#main{
+	float:center;
+	width: 650px;
+	padding: 25px;
+}
+
+#personalInfo{
+	float:left;
+	width:70%;
+	
+}
+
+#photo{
+	float:left;
+	width:30%;
+}
+
+#studentMainInfoDiv{
+	font-size: smaller;
+}
+
+#heading{
+	font-weight:bold;
+}
+
+.error{
+	color: red;
+	font-style: oblique;
+	font-size: smaller;
+}
+
+.error2{
+	color: red;
+	font-style: oblique;
+}
+
+.loginFormDiv{
+	margin-left:40%;
+	margin-top: 10%;
+}
+
+.errorMessage{
+	font-size : 13px;
+	font-style: italic;
+	color: red;
+}
+
+.containerDiv_exam{
+	padding-left : 20px;
+	width : 700px;
+	font-size : 11px;
+}
+.examHeaders{
+	background-color : #c9c299;	
+	height : 30px;
+	padding-left : 5px;
+	padding-top : 5px;
+	font-size : 20px;
+	font-weight : bold;
+	margin-top : 30px;
+	margin-bottom : 10px;
+}
+.examFormDiv{
+	font-size : 15px;
+	font-weight : bold;
+}
+.examFormDiv2{
+	font-size : 15px;
+	font-weight : normal;
+}
+
+.leftSubMenu{
+	display:none;
+	padding-left:25px;
+}
+
+.style4 {
+	text-align: center;
+	color:#FFFFFF;
+	background-color : #c9c299;	
+}
+
+.mainBody { /*height: 500px;*/
+	
+}

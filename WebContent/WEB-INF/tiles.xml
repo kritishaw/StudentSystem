@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+
+     <definition name="baseLayout" template="/WEB-INF/jsp/common/baseLayout.jsp">          
+          <put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp" />
+          <put-attribute name="menu" value="/WEB-INF/jsp/common/leftMenu.jsp" />
+          <put-attribute name="body" value="/WEB-INF/jsp/searchForm.jsp" /> 
+     </definition>
+     
+     <definition name="facultyBaseLayout" template="/WEB-INF/jsp/common/baseLayout.jsp">          
+          <put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp" />
+          <put-attribute name="menu" value="/WEB-INF/jsp/common/facultyLeftMenu.jsp" />
+          <put-attribute name="body" value="/WEB-INF/jsp/facultyHome.jsp" /> 
+     </definition>
+     
+     <!-- Search definitions -->
+        
+     <definition name="searchView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/searchPage.jsp"/>
+     </definition>
+      
+      <definition name="searchViewFaculty" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/Searchfaculty.jsp"/>
+     </definition>
+      
+     
+     <definition name="searchResultView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/searchResultView.jsp"/>
+     </definition>
+     
+     
+     
+     <definition name="searchResultViewFaculty" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/searchResultViewFaculty.jsp"/>
+     </definition>
+     
+     <definition name="employeeResultView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/EmployeeResult.jsp"/>
+     </definition>
+     
+     <definition name="newEmployeesView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/newEmployeesView.jsp"/>
+     </definition>
+     
+     <definition name="snapshotView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/snapshotPage.jsp"/>
+     </definition>
+     
+     <definition name="detailsView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/EmployeeDetails.jsp"/>
+     </definition>
+     
+      <definition name="employeeHistoryView" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/facultyEmployeeHistoryView.jsp"/>
+     </definition>
+     
+     <definition name="notifyView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/NotifyFaculty.jsp"/>
+     </definition>
+     
+     <definition name="modifyTemplateView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/ModifyEmailtemplate.jsp"/>
+     </definition>
+     
+     <definition name="facultyHomeView" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/facultyHome.jsp"/>
+     </definition>
+     
+      <definition name="facultyloginView" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/facultylogin.jsp"/>
+     </definition>
+     
+     <definition name="facultyDetailsView" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/facultyEmployeeDetails.jsp"/>
+     </definition>
+     
+     <definition name="newHireView" extends="facultyBaseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/NewHire.jsp"/>
+     </definition>
+     
+     <definition name="changePasswdView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/changePwdPage.jsp"/>
+     </definition>
+     
+     <definition name="changePasswdSuccessView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/changePwdSuccessPage.jsp"/>
+     </definition>
+     
+     <definition name="editFacultyView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/editFaculty.jsp"/>
+     </definition>
+    
+    
+	 <definition name="addFacultyView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/addFaculty.jsp"/>
+     </definition>  
+     
+     <definition name="addUserView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/addUser.jsp"/>
+     </definition>
+     
+     <definition name="editUserView" extends="baseLayout">
+       <put-attribute name="body" value="/WEB-INF/jsp/editUser.jsp"/>
+     </definition>
+        
+</tiles-definitions>

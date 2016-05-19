@@ -1,0 +1,1 @@
+<p style="color: green;">Password changed successfully</p>

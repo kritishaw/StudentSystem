@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.excludePattern" value="/assets/*/.*?" />
+	<constant name="struts.multipart.maxSize" value="40000000" />
+	<!-- <constant name="struts.multipart.saveDir" value="/home/saurabh/workspace/temp" 
+		/> -->
+
+	<package name="studentEmploymentDefault" extends="struts-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		<interceptors>
+			<interceptor name="login"
+				class="edu.ufl.ece.studentemployment.interceptors.LoginInterceptor" />
+
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">4194304</param>
+				</interceptor-ref>
+				<interceptor-ref name="params" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="login" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authStack" />
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="actionName">loginView</param>
+				<param name="namespace">/login</param>
+			</result>
+			<result name="FACULTY_SUBMIT" type="redirectAction">
+				<param name="actionName">homeView</param>
+				<param name="namespace">/faculty</param>
+			</result>
+			<result name="error">/WEB-INF/jsp/errorpage.jsp
+			</result>
+			<result name="NOT_AUTHORIZED" type="tiles">notAuthorizedView</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+
+	<package name="studentEmploymentDefault2" extends="struts-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		<interceptors>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">2097152</param>
+				</interceptor-ref>
+				<interceptor-ref name="params" />
+				<interceptor-ref name="servletConfig" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authStack" />
+		<global-results>
+			<result name="error">/WEB-INF/jsp/errorpage.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+
+
+		
+<package name="login3" namespace="" extends="studentEmploymentDefault2">
+
+<action name="loginSubmit"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="loginSubmitFaculty">
+			
+			<result name="FACULTY_SUBMIT" type="redirectAction">
+				<param name="actionName">homeView</param>
+				<param name="namespace">/faculty</param>
+			</result>
+		</action>
+		
+</package>
+
+	<!-- Login package -->
+	<package name="login" namespace="/login" extends="studentEmploymentDefault2">
+		<default-action-ref name="loginView" />
+		<action name="loginView"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="view">
+		<result name="LOGIN_VIEW">/WEB-INF/jsp/loginForm.jsp</result>
+			<result name="LOGIN_SUBMIT" type="redirectAction">
+				<param name="actionName">newEmployeesView</param>
+				<param name="namespace">/search</param>
+			</result>
+			<result name="FACULTY_SUBMIT" type="redirectAction">
+				<param name="actionName">homeView</param>
+				<param name="namespace">/faculty</param>
+			</result>
+			
+		</action>
+		
+		<!-- <action name="loginSubmitFaculty"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="loginSubmitFaculty">
+			
+			<result name="FACULTY_SUBMIT" type="redirectAction">
+				<param name="actionName">homeView</param>
+				<param name="namespace">/faculty</param>
+			</result>
+		</action> -->
+		
+		<action name="loginSubmit"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="submit">
+			<result name="LOGIN_VIEW">/WEB-INF/jsp/loginForm.jsp</result>
+			<result name="LOGIN_SUBMIT" type="redirectAction">
+				<param name="actionName">newEmployeesView</param>
+				<param name="namespace">/search</param>
+			</result>
+			<result name="FACULTY_SUBMIT" type="redirectAction">
+				<param name="actionName">homeView</param>
+				<param name="namespace">/faculty</param>
+			</result>
+		</action>
+		
+		
+		<action name="signOut"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="signOut">
+			<result name="LOGIN_VIEW">/WEB-INF/jsp/loginForm.jsp</result>
+		</action>
+		<action name="help"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="help">
+			<result name="HELP_VIEW">/WEB-INF/jsp/help.jsp</result>
+		</action>
+		<action name="facultyhelp"
+			class="edu.ufl.ece.studentemployment.actions.LoginActionSupport"
+			method="facultyhelp">
+			<result name="HELP_VIEW">/WEB-INF/jsp/facultyhelp.jsp</result>
+		</action>
+		
+		
+	</package>
+
+	<package name="search" namespace="/search" extends="studentEmploymentDefault">
+		<default-action-ref name="searchView" />
+		<action name="searchView"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="view">
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+		<action name="searchResult"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="showResult">
+			<result name="RESULT_VIEW" type="tiles">searchResultView</result>
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+		
+		<action name="newEmployeesView"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="newEmployeesView">
+			<result name="RESULT_VIEW" type="tiles">newEmployeesView</result>
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+		<action name="snapshotView"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="showSnapshotView">
+			<result name="RESULT_VIEW" type="tiles">snapshotView</result>
+		</action>
+		
+		<action name="exportToExcel"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="exportToExcel">
+				<result name="EXCEL_VIEW" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">filename="SearchResult.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="RESULT_VIEW" type="tiles">snapshotView</result>
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+		<action name="approve"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="approveEmployee">
+			<result name="RESULT_VIEW" type="tiles">newEmployeesView</result>
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+		<!-- Added for unique results display - start-->
+		<action name="employeeResult"
+			class="edu.ufl.ece.studentemployment.actions.SearchActionSupport"
+			method="showEmployeeResult">
+			<result name="RESULT_VIEW" type="tiles">employeeResultView</result>
+			<result name="SEARCH_VIEW" type="tiles">searchView</result>
+		</action>
+		
+	</package>
+	<package name="details" namespace="/details" extends="studentEmploymentDefault">
+		<default-action-ref name="detailsView" />
+		<action name="detailsView"
+			class="edu.ufl.ece.studentemployment.actions.EmployeeDetailsActionSupport"
+			method="view">
+			<result name="DETAILS_VIEW" type="tiles">detailsView</result>
+		</action>
+		<action name="updateEmployee"
+			class="edu.ufl.ece.studentemployment.actions.EmployeeDetailsActionSupport"
+			method="updateEmployee">
+			<result name="DETAILS_VIEW" type="tiles">detailsView</result>
+		</action>
+
+		<action name="updateNotes"
+			class="edu.ufl.ece.studentemployment.actions.EmployeeDetailsActionSupport"
+			method="updateNotes">
+			<result name="DETAILS_VIEW" type="tiles">detailsView</result>
+		</action>
+		
+		<action name="printEmployee"
+			class="edu.ufl.ece.studentemployment.actions.EmployeeDetailsActionSupport"
+			method="printEmployee">
+			<result name="DETAILS_VIEW" type="tiles">detailsView</result>
+			<result name="pdfView" type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">pdfStream</param>
+				<param name="contentDisposition">filename="Details.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+	</package>
+
+	<package name="Notify" namespace="/notify" extends="studentEmploymentDefault">
+		<default-action-ref name="notifyView" />
+		<action name="notifyView"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="view">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+
+		<action name="getEmployees"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="getEmployees">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+
+		<action name="Notify"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="notifyFaculty">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+		
+		<action name="generateLOA"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="generateLOA">
+			
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+			
+		</action>
+		
+		<action name="viewLOA"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="viewLOA">
+			<result name="pdfView" type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">pdfStream</param>
+				<param name="contentDisposition">filename="LOA.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+					</action>
+					
+					<action name="viewEval"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="viewEval">
+			<result name="pdfView" type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">pdfStream</param>
+				<param name="contentDisposition">filename="Eval.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+					</action>
+		
+		<action name="sendLOA"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="sendLOA">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+		
+		<action name="generateEL"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="generateEvaluationLetters">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+		
+		<action name="sendEL"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="sendEvaluationLetters">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+		
+		<action name="resetFlag"
+			class="edu.ufl.ece.studentemployment.actions.NotifyActionSupport"
+			method="resetFlag">
+			<result name="NOTIFY_VIEW" type="tiles">notifyView</result>
+		</action>
+		
+	</package>
+
+	<package name="modifytemplate" namespace="/modifytemplate"
+		extends="studentEmploymentDefault">
+		<default-action-ref name="modifyTemplateView" />
+		<action name="modifyTemplateView"
+			class="edu.ufl.ece.studentemployment.actions.ModifyTemplateActionSupport"
+			method="view">
+			<result name="MODIFYTEMPLATE_VIEW" type="tiles">modifyTemplateView
+			</result>
+		</action>
+
+		<action name="getTemplate"
+			class="edu.ufl.ece.studentemployment.actions.ModifyTemplateActionSupport"
+			method="getTemplateDetails">
+			<result name="MODIFYTEMPLATE_VIEW" type="tiles">modifyTemplateView
+			</result>
+		</action>
+
+		<action name="updateTemplate"
+			class="edu.ufl.ece.studentemployment.actions.ModifyTemplateActionSupport"
+			method="updateTemplate">
+			<result name="MODIFYTEMPLATE_VIEW" type="tiles">modifyTemplateView
+			</result>
+		</action>
+	</package>
+
+	<package name="faculty" namespace="/faculty" extends="studentEmploymentDefault">
+		<default-action-ref name="homeView" />
+		<action name="homeView"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="homeView">
+			<result name="HOME_VIEW" type="tiles">facultyHomeView
+			</result>
+		</action>
+		<action name="updateNotes"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="updateNotes">
+			<result name="DETAILS_VIEW" type="tiles">facultyDetailsView</result>
+		</action>
+<action name="showResultFaculty"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="showResultFaculty">
+			<result name="RESULT_VIEW" type="tiles">searchResultViewFaculty</result>
+			<result name="HOME_VIEW" type="tiles">searchViewFaculty</result>
+		</action>
+		
+		
+		<action name="newHire"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="newHireView">
+			<result name="HIRE_VIEW" type="tiles">newHireView
+			</result>
+		</action>
+
+		<action name="submitNewHire"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="updateNewHire">
+			<result name="HOME_VIEW" type="tiles">facultyHomeView
+			</result>
+		</action>
+
+		<action name="facultyDetails"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="detailsView">
+			<result name="DETAILS_VIEW" type="tiles">facultyDetailsView
+			</result>
+		</action>
+
+		<action name="employeeHistory"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="employeeHistoryView">
+			<result name="RESULT_VIEW" type="tiles">employeeHistoryView</result>
+		</action>
+		
+		<action name="reappoint"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="reappoint">
+			<result name="RESULT_VIEW" type="tiles">employeeHistoryView
+			</result>
+			<result name="DETAILS_VIEW" type="tiles">facultyDetailsView
+			</result>
+			<result name="HOME_VIEW" type="tiles">facultyHomeView
+			</result>
+			
+		</action>
+
+		<action name="terminate"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="terminate">
+			<result name="RESULT_VIEW" type="tiles">employeeHistoryView
+			</result>
+			<result name="HOME_VIEW" type="tiles">facultyHomeView
+			</result>
+		</action>
+
+		<action name="getAddFacultyView"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="addFacultyView">
+			<result name="RESULT_VIEW" type="tiles">addFacultyView
+			</result>
+		</action>
+		
+		<action name="addFaculty"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="addFacultyInfo">
+			<result name="RESULT_VIEW" type="tiles">addFacultyView
+			</result>
+		</action>
+		
+		<action name="getEditFacultyView"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="editFacultyView">
+			<result name="RESULT_VIEW" type="tiles">editFacultyView
+			</result>
+		</action>
+		
+		<action name="getFaculty"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="getFacultyInfo">
+			<result name="RESULT_VIEW" type="tiles">editFacultyView
+			</result>
+		</action>
+		
+		<action name="editFaculty"
+			class="edu.ufl.ece.studentemployment.actions.FacultyActionSupport"
+			method="editFacultyInfo">
+			<result name="RESULT_VIEW" type="tiles">editFacultyView
+			</result>
+		</action>
+	</package>
+
+	<package name="password" namespace="/passwd" extends="studentEmploymentDefault">
+		<default-action-ref name="view" />
+		<action name="view"
+			class="edu.ufl.ece.studentemployment.actions.ChangePasswordActionSupport"
+			method="view">
+			<result name="VIEW" type="tiles">changePasswdView
+			</result>
+		</action>
+
+		<action name="changePassword"
+			class="edu.ufl.ece.studentemployment.actions.ChangePasswordActionSupport"
+			method="submit">
+			<result name="VIEW" type="tiles">changePasswdView
+			</result>
+			<result name="SUCCESS_VIEW" type="tiles">changePasswdSuccessView
+			</result>
+		</action>
+	</package>
+
+
+	<package name="account" namespace="/account" extends="studentEmploymentDefault">
+		<default-action-ref name="addUserView" />
+		<action name="getAddUserView"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="addUserView">
+			<result name="RESULT_VIEW" type="tiles">addUserView
+			</result>
+		</action>
+		<action name="addUser"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="addUserInfo">
+			<result name="RESULT_VIEW" type="tiles">addUserView
+			</result>
+		</action>
+		<action name="getEditUserView"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="editUserView">
+			<result name="RESULT_VIEW" type="tiles">editUserView
+			</result>
+		</action>
+		
+		<action name="getUser"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="getUserInfo">
+			<result name="RESULT_VIEW" type="tiles">editUserView
+			</result>
+		</action>
+		
+		<action name="editUser"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="editUserInfo">
+			<result name="RESULT_VIEW" type="tiles">editUserView
+			</result>
+		</action>
+		
+		<action name="resetPassword"
+			class="edu.ufl.ece.studentemployment.actions.AccountManagementActionSupport"
+			method="resetPassword">
+			<result name="RESULT_VIEW" type="tiles">editUserView
+			</result>
+		</action>
+	</package>
+	<!-- <package name="default" namespace="/" extends="struts-default"> <default-action-ref 
+		name="index" /> <action name="index"> <result type="redirectAction"> <param 
+		name="actionName">HelloWorld</param> <param name="namespace">/example</param> 
+		</result> </action> </package> -->
+
+	<!-- Add packages here -->
+
+</struts>
